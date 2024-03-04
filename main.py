@@ -1,6 +1,6 @@
 #Import
 from flask import Flask, render_template,request, redirect
-#Connecting the database library
+#Collegare la libreria del database
 from flask_sqlalchemy import SQLAlchemy
 
 
@@ -8,28 +8,28 @@ app = Flask(__name__)
 #Connecting SQLite
 app.config['SQLALCHEMY_DATABASE_URI'] = 'sqlite:///diary.db'
 app.config['SQLALCHEMY_TRACK_MODIFICATIONS'] = False
-#Creating a db
+#creare il db
 db = SQLAlchemy(app)
-#Creating a table
+#Creare una tabella
 
-#Assignment #1. Create a db
+#Consegna #1. Creare un db
 class Card(db.Model):
-    #Creating column fields
+    #Creazione di campi colonna
     #id
     id = db.Column(db.Integer, primary_key=True)
-    #Title
+    #Titolo
     title = db.Column(db.String(100), nullable=False)
-    #Description
+    #Descrizione
     subtitle = db.Column(db.String(300), nullable=False)
-    #Text
+    #Testo
     text = db.Column(db.Text, nullable=False)
 
-    #Outputting the object and its
+    #Produrre l'oggetto e la sua rappresentazione
     def __repr__(self):
         return f'<Card {self.id}>'
 
 
-#Running the page with the content
+#Esecuzione della pagina con il contenuto
 @app.route('/')
 def index():
     #Outputting the objects from the DB
@@ -38,7 +38,7 @@ def index():
 
     return render_template('index.html', cards=cards)
 
-#Running the page with the card
+#Esecuzione della pagina con la scheda
 @app.route('/card/<int:id>')
 def card(id):
     #Assignment #2. Use the id to show the right card
@@ -46,12 +46,12 @@ def card(id):
 
     return render_template('card.html', card=card)
 
-#Running the page with card initialization
+#Esecuzione della pagina con inizializzazione della scheda
 @app.route('/create')
 def create():
     return render_template('create_card.html')
 
-#The card's form
+#Il modulo della carta
 @app.route('/form_create', methods=['GET','POST'])
 def form_create():
     if request.method == 'POST':
@@ -59,9 +59,9 @@ def form_create():
         subtitle =  request.form['subtitle']
         text =  request.form['text']
 
-        #Creating an object to pass to DB
+        #Creare un oggetto da passare al DB
 
-        #Assignment #2. Create a way to store data in the DB
+        #Consegna #2. Creare un modo per memorizzare i dati nel DB
         card = Card(title=title, subtitle=subtitle, text=text)
 
         db.session.add(card)
