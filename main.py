@@ -1,11 +1,11 @@
-#Import
+#Importare le librerie
 from flask import Flask, render_template,request, redirect
 #Collegare la libreria del database
 from flask_sqlalchemy import SQLAlchemy
 
 
 app = Flask(__name__)
-#Connecting SQLite
+#Connettere SQLite
 app.config['SQLALCHEMY_DATABASE_URI'] = 'sqlite:///diary.db'
 app.config['SQLALCHEMY_TRACK_MODIFICATIONS'] = False
 #creare il db
@@ -32,8 +32,8 @@ class Card(db.Model):
 #Esecuzione della pagina con il contenuto
 @app.route('/')
 def index():
-    #Outputting the objects from the DB
-    #Assignment #2. Make it so that the DB objects are shown in index.html
+    #Emissione degli oggetti dal DB
+    #Consegna #2. Fare in modo che gli oggetti del DB siano visualizzati in index.html
     cards = Card.query.order_by(Card.id).all()
 
     return render_template('index.html', cards=cards)
